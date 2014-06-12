@@ -1,4 +1,4 @@
-Ct  cond1_1 cond1_2 cond1_3	cond2_1	cond2_2	cond2_3
+Ct	cond1_1	cond1_2	cond1_3	cond2_1	cond2_2	cond2_3
 gene1	21	20.8	20.5	21.5	22	22
 gene2	26	25.4	26	20	20.3	20.5
 gene3	14	14	14.5	12	11.8	12
