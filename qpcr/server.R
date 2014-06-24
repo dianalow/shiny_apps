@@ -9,7 +9,7 @@ shinyServer(function(input, output) {
     inFile <- input$file1
     
     if (is.null(inFile))
-      return(NULL)
+      return()
     
     dataset<-read.table(inFile$datapath, header=TRUE, sep="\t", quote='',row.names=1)
     return(dataset)
@@ -48,6 +48,8 @@ shinyServer(function(input, output) {
     }
     
     dataset<-datasetInput()
+    if(is.null(dataset))
+      return ()
     numconds<-input$conditions
     numreps<-ncol(dataset)/numconds
     group<-rep(1:numconds,each=numreps)
@@ -58,7 +60,6 @@ shinyServer(function(input, output) {
     dvals<-do.call(cbind,by(t(dataset),group,function(x) colMeans(x)))
     dst<-do.call(cbind,by(t(dataset),group,function(x) apply(x,2,sd)))
     dst[is.na(dst)]<-0
-    print(dst)
     ndvals<-dvals
     ndst<-dst
     if(ng==T) {
@@ -81,6 +82,8 @@ shinyServer(function(input, output) {
     normcond<-input$displaync
     
     vals<-calculateAll()
+    if(is.null(vals))
+      return ()
     ddct<-vals[[3]]
     se<-vals[[4]]
     ylabel<-"log2ratio"
@@ -133,19 +136,19 @@ shinyServer(function(input, output) {
   })
   
   output$mean<-renderTable({
-    dataset<-calculateAll()[[1]]
+    calculateAll()[[1]]
   })
   
   output$stdev<-renderTable({
-    dataset<-calculateAll()[[2]]
+    calculateAll()[[2]]
   })
   
   output$deltact<-renderTable({
-    dataset<-calculateAll()[[3]]
+    calculateAll()[[3]]
   })
   
   output$deltasd<-renderTable({
-    dataset<-calculateAll()[[4]]
+    calculateAll()[[4]]
   })
     
   
